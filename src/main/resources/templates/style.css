@@ -1,0 +1,46 @@
+body {
+    background-color: #004aad;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+h1 {
+    font-family: "Caveat Brush", cursive;
+    font-weight: 400;
+    font-style: normal;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-family: Arial, sans-serif;
+}
+
+h3 {
+
+}
+
+.choice-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 20px;
+    border: none;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.tentGreen {
+    background-color: #00bf63;
+}
+.grassGreen {
+    background-color: #7ed957;
+}
+.limeGreen {
+    background-color: #c1ff72;
+}
