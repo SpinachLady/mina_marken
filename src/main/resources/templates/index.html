@@ -2,9 +2,16 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" th:href="@{/css/style.css}">
     <title>Startsida</title>
 </head>
 <body>
+    <div class="container">
+        <h1>Mina märken</h1>
+        <a href="scout/createAccount" class="tentGreen choice-button">SCOUT</a>
+        <a href="leader/createAccount" class="grassGreen choice-button">LEDARE</a>
+        <a href="admin/start" class="limeGreen choice-button">KÅRADMIN</a>
+        <img src="https://web.cdn.scouterna.net/uploads/sites/75/2019/10/segeltorps-logga-1-e1597417540454.png" alt="Segeltorp logo">
+    </div>
 </body>
 </html>
