@@ -2,16 +2,28 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <title>Startsida</title>
 </head>
-<body>
-    <div class="container">
-        <h1>Mina märken</h1>
-        <a href="scout/createAccount" class="tentGreen choice-button">SCOUT</a>
-        <a href="leader/createAccount" class="grassGreen choice-button">LEDARE</a>
-        <a href="admin/start" class="limeGreen choice-button">KÅRADMIN</a>
-        <img src="https://web.cdn.scouterna.net/uploads/sites/75/2019/10/segeltorps-logga-1-e1597417540454.png" alt="Segeltorp logo">
+<body class="text-white">
+    <div class="d-flex flex-column justify-content-center align-items-center min-vh-100">
+        <h1 class="mb-4">Mina märken</h1>
+        <div class="mb-3">
+            <a href="scout/createAccount">
+                <button type="button" class="btn btn-primary tentGreen choice-button">SCOUT</button>
+            </a>
+            <a href="leader/createAccount">
+                <button type="button" class="btn btn-primary grassGreen choice-button">LEDARE</button>
+            </a>
+            <a href="admin/start">
+                <button type="button" class="btn btn-primary limeGreen choice-button">KÅRADMIN</button>
+            </a>
+        </div>
+        <div class="bg-white p-4 rounded">
+            <img src="https://web.cdn.scouterna.net/uploads/sites/75/2019/10/segeltorps-logga-1-e1597417540454.png" class="img-fluid" alt="Segeltorps scoutkår">
+        </div>
     </div>
 </body>
 </html>
