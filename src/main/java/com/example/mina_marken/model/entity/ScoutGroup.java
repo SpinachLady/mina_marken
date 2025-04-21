@@ -21,4 +21,8 @@ public class ScoutGroup {
 
     private String name;
 
+    private int minAge;
+
+    private int maxAge;
+
 }

@@ -3,8 +3,10 @@ package com.example.mina_marken.service;
 import com.example.mina_marken.model.Term;
 import com.example.mina_marken.model.entity.Patch;
 import com.example.mina_marken.model.entity.PatchOrder;
+import com.example.mina_marken.model.entity.ScoutGroup;
 import com.example.mina_marken.repo.PatchOrderRepo;
 import com.example.mina_marken.repo.PatchRepo;
+import com.example.mina_marken.repo.ScoutGroupRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -17,10 +19,12 @@ public class PatchServiceImpl implements PatchService {
 
     private final PatchOrderRepo patchOrderRepo;
     private final PatchRepo patchRepo;
+    private final ScoutGroupRepo scoutGroupRepo;
 
-    public PatchServiceImpl(PatchOrderRepo patchOrderRepo, PatchRepo patchRepo) {
+    public PatchServiceImpl(PatchOrderRepo patchOrderRepo, PatchRepo patchRepo, ScoutGroupRepo scoutGroupRepo) {
         this.patchOrderRepo = patchOrderRepo;
         this.patchRepo = patchRepo;
+        this.scoutGroupRepo = scoutGroupRepo;
     }
 
     public List<Patch> getPatchesFromIdCode(String idCode) {
@@ -51,28 +55,9 @@ public class PatchServiceImpl implements PatchService {
         return patchOrders;
     }
 
-    //TODO: hämta scoutGroupId från scoutGroup-tabellen istället & gör detta på ett snyggare sätt
     private List<PatchOrder> getPatchOrdersFromAgeAndYear(int age, int year) {
-        long scoutGroupId = 0L;
-        if (age == 5 || age == 6 || age == 7) {
-            scoutGroupId = 1L;
-        }
-        if (age == 8 || age == 9) {
-            scoutGroupId = 2L;
-        }
-        if (age == 10 || age == 11) {
-            scoutGroupId = 3L;
-        }
-        if (age == 12 || age == 13 || age == 14)  {
-            scoutGroupId = 4L;
-        }
-        if (age == 15 || age == 16 || age == 17) {
-            scoutGroupId = 5L;
-        }
-        if (age > 17) {
-            scoutGroupId = 6L;
-        }
-        return patchOrderRepo.findByYearAndScoutGroup_Id(year, scoutGroupId);
+        ScoutGroup group = scoutGroupRepo.findByAgeInRange(age);
+        return patchOrderRepo.findByYearAndScoutGroup(year, group);
     }
 
     private List<Patch> filterUniquePatches(List<Patch> patches) {
