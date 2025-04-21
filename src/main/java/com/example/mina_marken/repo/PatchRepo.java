@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PatchRepo extends JpaRepository<Patch, Long> {
 
+    public Patch getPatchById(Long id);
 }

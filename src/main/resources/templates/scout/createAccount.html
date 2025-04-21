@@ -48,10 +48,16 @@
                         <option>2020</option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary choice-button">Submit</button>
+                <button type="submit" class="btn btn-primary choice-button" onclick="goToMainPage()">Submit</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function goToMainPage() {
+        const scoutID = document.getElementById('exampleSelect3').value + document.getElementById('exampleSelect1').value + document.getElementById('exampleSelect2').value;
+        window.location.href = '/scout/main/' + scoutID
+    }
+</script>
 </body>
 </html>

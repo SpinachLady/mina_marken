@@ -1,10 +1,9 @@
 package com.example.mina_marken.service;
 
-import org.springframework.stereotype.Service;
+import com.example.mina_marken.model.entity.Patch;
+import java.util.List;
 
-@Service
-public class PatchService {
-
-
+public interface PatchService {
+    List<Patch> getPatchesFromIdCode(String idCode);
 
 }

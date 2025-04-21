@@ -15,16 +15,9 @@
         <div class="row justify-content-center patchListContainer">
             <div class="col-md-8">
                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3 justify-content-left">
-                    <div class="col">
-                        <a href="#">
-                            <img src="https://www.scouterna.se/_next/image/?url=https%3A%2F%2Fmedia.scoutcontent.se%2Fuploads%2F2021%2F03%2F3339d99-4.png&w=384&q=75"
-                                 alt="andra repmärket" class="img-fluid patch">
-                        </a>
-                    </div>
-                    <div class="col">
-                        <a href="#">
-                            <img src="https://www.scouterna.se/_next/image/?url=https%3A%2F%2Fmedia.scoutcontent.se%2Fuploads%2F2021%2F03%2F3339d99-4.png&w=384&q=75"
-                                 alt="andra repmärket" class="img-fluid patch">
+                    <div class="col" th:each="patch : ${patches}">
+                        <a th:href="@{'/specific/' + ${patch.id}}">
+                            <img th:src="${patch.imgUrl}" th:alt="${patch.name}" class="img-fluid patch rounded shadow">
                         </a>
                     </div>
                 </div>

@@ -14,7 +14,6 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class Patch {
-
     @Id
     @GeneratedValue
     private Long id;
@@ -26,7 +25,4 @@ public class Patch {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private PatchType type;
-
-    @OneToMany(mappedBy = "patch")
-    private List<PatchOrder> patchOrders;
 }
