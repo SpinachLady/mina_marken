@@ -6,4 +6,5 @@ import java.util.List;
 public interface PatchService {
     List<Patch> getPatchesFromIdCode(String idCode);
 
+    Patch getPatchFromPatchId (Long id);
 }

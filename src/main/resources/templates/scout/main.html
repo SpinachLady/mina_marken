@@ -16,7 +16,7 @@
             <div class="col-md-8">
                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 g-3 justify-content-left">
                     <div class="col" th:each="patch : ${patches}">
-                        <a th:href="@{'/specific/' + ${patch.id}}">
+                        <a th:href="@{'/scout/specific/' + ${scoutID} + '/' + ${patch.id}}">
                             <img th:src="${patch.imgUrl}" th:alt="${patch.name}" class="img-fluid patch rounded shadow">
                         </a>
                     </div>

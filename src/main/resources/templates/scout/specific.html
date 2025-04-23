@@ -15,12 +15,10 @@
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="bg-white text-dark p-4 rounded shadow text-center">
-                    <h3>Andra Repmärket</h3>
-                    <img src="https://www.scouterna.se/_next/image/?url=https%3A%2F%2Fmedia.scoutcontent.se%2Fuploads%2F2021%2F03%2F3339d99-4.png&w=384&q=75"
-                         alt="Andra repmärket" class="img-fluid my-3" style="max-height: 200px;">
-                    <p class="fs-5">
-                        Du tog Andra Repmärket HT-24.
-                    </p>
+                    <h3 th:text="${patch.name}"></h3>
+                    <img th:src="${patch.imgUrl}"
+                         th:alt="${patch.name}" class="img-fluid my-3" style="max-height: 200px;">
+                    <p th:text="'Du tog märket ' + ${patch.name} + ' ' + ${patchOrder.getTerm()} + '-' + ${patchOrder.getYear()} + '.'" class="fs-5"></p>
                 </div>
             </div>
         </div>

@@ -39,6 +39,10 @@ public class PatchServiceImpl implements PatchService {
         return filterUniquePatches(patches);
     }
 
+    public Patch getPatchFromPatchId (Long id) {
+        return patchRepo.getPatchById(id);
+    }
+
     private List<PatchOrder> getPatchOrdersFromBirthYearAndStartYearAndStartTerm(int birthYear, int startYear, Term startTerm) {
         List<PatchOrder> patchOrders = new ArrayList<>();
         int age = startYear - birthYear;
@@ -71,6 +75,4 @@ public class PatchServiceImpl implements PatchService {
                 .stream()
                 .toList();
     }
-
-
 }
