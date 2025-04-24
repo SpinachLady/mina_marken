@@ -1,0 +1,32 @@
+package com.example.mina_marken.service;
+
+import com.example.mina_marken.model.Term;
+import com.example.mina_marken.model.entity.Patch;
+import com.example.mina_marken.model.entity.PatchOrder;
+import com.example.mina_marken.model.entity.ScoutGroup;
+import com.example.mina_marken.repo.PatchOrderRepo;
+import com.example.mina_marken.repo.ScoutGroupRepo;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class ScoutGroupServiceImpl implements ScoutGroupService{
+
+    private final PatchOrderRepo patchOrderRepo;
+    private final ScoutGroupRepo scoutGroupRepo;
+
+    public ScoutGroupServiceImpl(PatchOrderRepo patchOrderRepo, ScoutGroupRepo scoutGroupRepo) {
+        this.patchOrderRepo = patchOrderRepo;
+        this.scoutGroupRepo = scoutGroupRepo;
+    }
+
+    public List<ScoutGroup> getAllScoutGroups() {
+        return scoutGroupRepo.findAll();
+    }
+
+    public ScoutGroup getScoutGroupFromName(String name) {
+        return scoutGroupRepo.findByName(name);
+    }
+
+}

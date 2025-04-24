@@ -16,20 +16,20 @@
         <div class="col-md-8 col-lg-6">
             <div class="bg-white text-dark p-4 rounded shadow text-center">
                 <div>
-                    <label for="exampleSelect1" class="form-label mt-4">Vilken avdelning leder du?</label>
+                    <label for="exampleSelect1" class="form-label mt-4">Vilken avdelning vill du se?</label>
                     <select class="form-select" id="exampleSelect1">
-                        <option>Familjescouterna</option>
-                        <option>Spårarna</option>
-                        <option>Upptäckarna</option>
-                        <option>Äventyrarna</option>
-                        <option>Utmanarna</option>
-                        <option>Roverlaget</option>
+                        <option th:each="group : ${groups}" th:text="${group.name}"></option>
                     </select>
                 </div>
-                <button type="submit" class="btn btn-primary choice-button tentGreen">Submit</button>
+                <button type="submit" class="btn btn-primary choice-button tentGreen" onclick="goToMainPage()">Submit</button>
             </div>
         </div>
     </div>
 </div>
+<script>
+    function goToMainPage() {
+        window.location.href = '/leader/main/' + document.getElementById('exampleSelect1').value
+    }
+</script>
 </body>
 </html>

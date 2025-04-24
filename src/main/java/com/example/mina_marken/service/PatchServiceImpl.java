@@ -9,6 +9,7 @@ import com.example.mina_marken.repo.PatchRepo;
 import com.example.mina_marken.repo.ScoutGroupRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
@@ -32,29 +33,36 @@ public class PatchServiceImpl implements PatchService {
         Term startTerm = Term.valueOf(idCode.substring(4, 6));
         int birthYear = Integer.parseInt(idCode.substring(6));
         List<PatchOrder> patchOrders = getPatchOrdersFromBirthYearAndStartYearAndStartTerm(birthYear, startYear, startTerm);
-        List<Patch> patches = new ArrayList<>();
-        for (PatchOrder patchOrder: patchOrders) {
-            patches.add(patchRepo.getPatchById(patchOrder.getPatch().getId()));
-        }
+        List<Patch> patches = getPatchesFromPatchOrders(patchOrders);
         return filterUniquePatches(patches);
     }
-
-    public Patch getPatchFromPatchId (Long id) {
+    public List<Patch> getPatchesFromCurrentScoutGroup(ScoutGroup scoutGroup) {
+        int minBirthYear = getBirthYearFromAge(scoutGroup.getMinAge());
+        int maxBirthYear = getBirthYearFromAge(scoutGroup.getMaxAge());
+        List<Integer> birthYears = getBirthYearsBetween(minBirthYear, maxBirthYear);
+        List<PatchOrder> patchOrders = new ArrayList<>();
+        for (Integer birthYear : birthYears) {
+            patchOrders.addAll(getPatchOrdersFromBirthYearAndStartYearAndStartTerm(birthYear, birthYear + 5, Term.HT));
+        }
+        List<Patch> patches = getPatchesFromPatchOrders(patchOrders);
+        return filterUniquePatches(patches);
+    }
+    public Patch getPatchFromPatchId(Long id) {
         return patchRepo.getPatchById(id);
     }
 
     private List<PatchOrder> getPatchOrdersFromBirthYearAndStartYearAndStartTerm(int birthYear, int startYear, Term startTerm) {
         List<PatchOrder> patchOrders = new ArrayList<>();
-        int age = startYear - birthYear;
+        int startAge = startYear - birthYear;
         int currentAge = 2025 - birthYear;
         int year = startYear;
-        while (age < currentAge) {
-            List<PatchOrder> yearPatches = getPatchOrdersFromAgeAndYear(age, year);
+        while (startAge < currentAge) {
+            List<PatchOrder> yearPatches = getPatchOrdersFromAgeAndYear(startAge, year);
             if (yearPatches != null) {
                 patchOrders.addAll(yearPatches);
             }
             year++;
-            age++;
+            startAge++;
         }
         return patchOrders;
     }
@@ -74,5 +82,26 @@ public class PatchServiceImpl implements PatchService {
                 .values()
                 .stream()
                 .toList();
+    }
+
+    private List<Patch> getPatchesFromPatchOrders(List<PatchOrder> patchOrders) {
+        List<Patch> patches = new ArrayList<>();
+        for (PatchOrder patchOrder: patchOrders) {
+            patches.add(patchRepo.getPatchById(patchOrder.getPatch().getId()));
+        }
+        return patches;
+    }
+
+    private int getBirthYearFromAge(int age) {
+        return Year.now().getValue() - age;
+    }
+
+    private List<Integer> getBirthYearsBetween(int minBirthYear, int maxBirthYear) {
+        List<Integer> birthYears = new ArrayList<>();
+        while (maxBirthYear <= minBirthYear) {
+            birthYears.add(maxBirthYear);
+            maxBirthYear++;
+        }
+        return birthYears;
     }
 }

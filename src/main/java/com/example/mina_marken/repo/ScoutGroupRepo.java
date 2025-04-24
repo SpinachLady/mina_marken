@@ -11,4 +11,6 @@ public interface ScoutGroupRepo extends JpaRepository<ScoutGroup, Long> {
     @Query("SELECT s FROM ScoutGroup s WHERE :age BETWEEN s.minAge AND s.maxAge")
     ScoutGroup findByAgeInRange(@Param("age") int age);
 
+    ScoutGroup findByName(String name);
+
 }
