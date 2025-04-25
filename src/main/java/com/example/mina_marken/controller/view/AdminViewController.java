@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class AdminViewController {
 
     @RequestMapping("/start")
-    public String getStartPage(Model model) {
+    public String getStartPage() {
         return "admin/start";
     }
 
