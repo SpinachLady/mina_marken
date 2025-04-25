@@ -29,4 +29,8 @@ public class ScoutGroupServiceImpl implements ScoutGroupService{
         return scoutGroupRepo.findByName(name);
     }
 
+    public ScoutGroup getScoutGroupFromID(Long id) {
+        return scoutGroupRepo.findById(id).orElse(null);
+    }
+
 }

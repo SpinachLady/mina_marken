@@ -8,7 +8,11 @@ import com.example.mina_marken.repo.PatchOrderRepo;
 import com.example.mina_marken.repo.ScoutGroupRepo;
 import org.springframework.stereotype.Service;
 
+import java.time.Year;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 @Service
 public class PatchOrderServiceImpl implements PatchOrderService{
@@ -36,18 +40,75 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         return patchOrderList.get(0);
     }
 
+    public List<PatchOrder> getPatchOrderFromGroupIDAndPatch(ScoutGroup scoutGroup, Patch patch) {
+        List<Integer> birthYears = getBirthYearsFromScoutGroupAndYear(scoutGroup, Year.now().getValue());
+        List<PatchOrder> patchOrderList = patchOrderRepo.findByPatch(patch);
+        List<PatchOrder> correctPatchOrders = new ArrayList<>();
+        for (Integer birthYear : birthYears) {
+            for (PatchOrder patchOrder : patchOrderList) {
+                if (birthYearMatchesScoutGroupInPatchOrder(birthYear, patchOrder)) {
+                    correctPatchOrders.add(patchOrder);
+                }
+            }
+        }
+        return filterUniquePatchOrders(correctPatchOrders);
+    }
+
+    public String getInfoTextFromPatchOrders(List<PatchOrder> patchOrders) {
+        StringBuilder infoText = new StringBuilder("Dina scouter har tagit detta märke");
+        if (patchOrders.size() == 1) {
+            infoText.append(" ").append(patchOrders.get(0).getTerm()).append("-").append(patchOrders.get(0).getYear());
+        }
+        else {
+            infoText.append(" ");
+            while (patchOrders.size() > 1) {
+                infoText.append(patchOrders.get(0).getTerm()).append("-").append(patchOrders.get(0).getYear()).append(", ");
+                patchOrders.remove(0);
+            }
+            infoText.append("och ").append(patchOrders.get(0).getYear());
+        }
+        infoText.append(".");
+        return String.valueOf(infoText);
+    }
+
+
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age = patchOrder.getYear() - birthYear;
         ScoutGroup sg = scoutGroupRepo.findByAgeInRange(age);
-        System.out.println("scoutgroup1: " + sg);
-        System.out.println("scoutgroup2: " + patchOrder.getScoutGroup());
         return patchOrder.getScoutGroup().equals(sg);
     }
 
-    private boolean startTermIsEarlierThanPatchOrderTime (int startYear, Term startTerm, PatchOrder patchOrder) {
+    private boolean startTermIsEarlierThanPatchOrderTime(int startYear, Term startTerm, PatchOrder patchOrder) {
         if (patchOrder.getYear() < startYear) {
             return false;
         }
         return patchOrder.getYear() != startYear || patchOrder.getTerm() != Term.VT || startTerm != Term.HT;
+    }
+
+    private List<Integer> getBirthYearsFromScoutGroupAndYear(ScoutGroup scoutGroup, int year) {
+        int minBirthYear = year - scoutGroup.getMinAge();
+        int maxBirthYear = year - scoutGroup.getMaxAge();
+        return getBirthYearsBetween(minBirthYear, maxBirthYear);
+    }
+
+    private List<Integer> getBirthYearsBetween(int minBirthYear, int maxBirthYear) {
+        List<Integer> birthYears = new ArrayList<>();
+        while (maxBirthYear <= minBirthYear) {
+            birthYears.add(maxBirthYear);
+            maxBirthYear++;
+        }
+        return birthYears;
+    }
+
+    private List<PatchOrder> filterUniquePatchOrders(List<PatchOrder> patchOrders) {
+        return patchOrders.stream()
+                .collect(Collectors.toMap(
+                        PatchOrder::getId,
+                        Function.identity(),
+                        (existing, replacement) -> existing
+                ))
+                .values()
+                .stream()
+                .toList();
     }
 }

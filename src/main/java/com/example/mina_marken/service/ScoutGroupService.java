@@ -11,4 +11,5 @@ public interface ScoutGroupService {
     List<ScoutGroup> getAllScoutGroups();
 
     ScoutGroup getScoutGroupFromName(String name);
+    ScoutGroup getScoutGroupFromID(Long id);
 }
