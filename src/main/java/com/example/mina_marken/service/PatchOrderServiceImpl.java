@@ -71,6 +71,9 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         return String.valueOf(infoText);
     }
 
+    public void savePatchOrder(PatchOrder patchOrder) {
+        patchOrderRepo.save(patchOrder);
+    }
 
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age = patchOrder.getYear() - birthYear;

@@ -8,5 +8,8 @@ import java.util.List;
 public interface PatchService {
     List<Patch> getPatchesFromIdCode(String idCode);
     Patch getPatchFromPatchId (Long id);
+    Patch getPatchFromName(String name);
     List<Patch> getPatchesFromCurrentScoutGroup(ScoutGroup scoutGroup);
+    List<Patch> getAllPatches();
+
 }

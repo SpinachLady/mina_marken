@@ -50,6 +50,13 @@ public class PatchServiceImpl implements PatchService {
     public Patch getPatchFromPatchId(Long id) {
         return patchRepo.getPatchById(id);
     }
+    public Patch getPatchFromName(String name) {
+        return patchRepo.getPatchByName(name);
+    }
+
+    public List<Patch> getAllPatches() {
+        return patchRepo.findAll();
+    }
 
     private List<PatchOrder> getPatchOrdersFromBirthYearAndStartYearAndStartTerm(int birthYear, int startYear, Term startTerm) {
         List<PatchOrder> patchOrders = new ArrayList<>();

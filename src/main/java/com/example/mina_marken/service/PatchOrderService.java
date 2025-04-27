@@ -10,6 +10,6 @@ public interface PatchOrderService {
 
     PatchOrder getPatchOrderFromScoutIDAndPatch(String scoutID, Patch patch);
     List<PatchOrder> getPatchOrderFromGroupIDAndPatch(ScoutGroup scoutGroup, Patch patch);
-
     String getInfoTextFromPatchOrders(List<PatchOrder> patchOrders);
+    void savePatchOrder(PatchOrder patchOrder);
 }
