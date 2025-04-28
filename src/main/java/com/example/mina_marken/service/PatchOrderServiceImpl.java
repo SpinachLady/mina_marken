@@ -6,8 +6,10 @@ import com.example.mina_marken.model.entity.PatchOrder;
 import com.example.mina_marken.model.entity.ScoutGroup;
 import com.example.mina_marken.repo.PatchOrderRepo;
 import com.example.mina_marken.repo.ScoutGroupRepo;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,10 +21,12 @@ public class PatchOrderServiceImpl implements PatchOrderService{
 
     private final PatchOrderRepo patchOrderRepo;
     private final ScoutGroupRepo scoutGroupRepo;
+    private final GeneralService generalService;
 
-    public PatchOrderServiceImpl(PatchOrderRepo patchOrderRepo, ScoutGroupRepo scoutGroupRepo) {
+    public PatchOrderServiceImpl(PatchOrderRepo patchOrderRepo, ScoutGroupRepo scoutGroupRepo, GeneralService generalService) {
         this.patchOrderRepo = patchOrderRepo;
         this.scoutGroupRepo = scoutGroupRepo;
+        this.generalService = generalService;
     }
 
     public PatchOrder getPatchOrderFromScoutIDAndPatch(String scoutID, Patch patch) {
@@ -41,7 +45,15 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     }
 
     public List<PatchOrder> getPatchOrderFromGroupIDAndPatch(ScoutGroup scoutGroup, Patch patch) {
-        List<Integer> birthYears = getBirthYearsFromScoutGroupAndYear(scoutGroup, Year.now().getValue());
+        Term currentTerm;
+        LocalDate midYear = LocalDate.of(Year.now().getValue(), 6, 30);
+        if (LocalDate.now().isAfter(midYear)) {
+            currentTerm = Term.HT;
+        }
+        else {
+            currentTerm = Term.VT;
+        }
+        List<Integer> birthYears = generalService.getBirthYearsFromScoutGroupAndYearAndTerm(scoutGroup, Year.now().getValue(), currentTerm);
         List<PatchOrder> patchOrderList = patchOrderRepo.findByPatch(patch);
         List<PatchOrder> correctPatchOrders = new ArrayList<>();
         for (Integer birthYear : birthYears) {
@@ -95,16 +107,7 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     private List<Integer> getBirthYearsFromScoutGroupAndYear(ScoutGroup scoutGroup, int year) {
         int minBirthYear = year - scoutGroup.getMinAge();
         int maxBirthYear = year - scoutGroup.getMaxAge();
-        return getBirthYearsBetween(minBirthYear, maxBirthYear);
-    }
-
-    private List<Integer> getBirthYearsBetween(int minBirthYear, int maxBirthYear) {
-        List<Integer> birthYears = new ArrayList<>();
-        while (maxBirthYear <= minBirthYear) {
-            birthYears.add(maxBirthYear);
-            maxBirthYear++;
-        }
-        return birthYears;
+        return generalService.getYearsBetween(minBirthYear, maxBirthYear);
     }
 
     private List<PatchOrder> filterUniquePatchOrders(List<PatchOrder> patchOrders) {

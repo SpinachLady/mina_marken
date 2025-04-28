@@ -61,8 +61,14 @@ public class PatchServiceImpl implements PatchService {
     private List<PatchOrder> getPatchOrdersFromBirthYearAndStartYearAndStartTerm(int birthYear, int startYear, Term startTerm) {
         List<PatchOrder> patchOrders = new ArrayList<>();
         int startAge = startYear - birthYear;
-        int currentAge = 2025 - birthYear;
+        int currentAge = Year.now().getValue() - birthYear;
         int year = startYear;
+        List<PatchOrder> startYearPatches = getPatchOrdersFromAgeAndYear(startAge, year);
+        if (startTerm.equals(Term.HT)) {
+            startYearPatches.removeIf(patchOrder -> patchOrder.getTerm().equals(Term.VT));
+        }
+        startAge++;
+        year++;
         while (startAge < currentAge) {
             List<PatchOrder> yearPatches = getPatchOrdersFromAgeAndYear(startAge, year);
             if (yearPatches != null) {
@@ -71,6 +77,7 @@ public class PatchServiceImpl implements PatchService {
             year++;
             startAge++;
         }
+        patchOrders.addAll(startYearPatches);
         return patchOrders;
     }
 
