@@ -12,4 +12,6 @@ public interface PatchOrderService {
     List<PatchOrder> getPatchOrderFromGroupIDAndPatch(ScoutGroup scoutGroup, Patch patch);
     String getInfoTextFromPatchOrders(List<PatchOrder> patchOrders);
     void savePatchOrder(PatchOrder patchOrder);
+    List<PatchOrder> getAllPatchOrders();
+
 }

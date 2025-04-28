@@ -1,6 +1,7 @@
 package com.example.mina_marken.controller.view;
 
 import com.example.mina_marken.model.entity.Patch;
+import com.example.mina_marken.model.entity.PatchOrder;
 import com.example.mina_marken.model.entity.ScoutGroup;
 import com.example.mina_marken.service.PatchOrderService;
 import com.example.mina_marken.service.PatchService;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -32,6 +34,8 @@ public class AdminViewController {
 
     @RequestMapping("/showList")
     public String getShowListPage(Model model) {
+        List<PatchOrder> organizationPatches = pos.getAllPatchOrders();
+        model.addAttribute("patchOrders", organizationPatches);
         return "admin/showList";
     }
 

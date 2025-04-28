@@ -75,6 +75,10 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         patchOrderRepo.save(patchOrder);
     }
 
+    public List<PatchOrder> getAllPatchOrders() {
+        return patchOrderRepo.findAll();
+    }
+
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age = patchOrder.getYear() - birthYear;
         ScoutGroup sg = scoutGroupRepo.findByAgeInRange(age);
