@@ -63,17 +63,17 @@ public class PatchServiceImpl implements PatchService {
         int startAge = startYear - birthYear;
         int currentAge = Year.now().getValue() - birthYear;
         int year = startYear;
-        List<PatchOrder> startYearPatches = getPatchOrdersFromAgeAndYear(startAge, year);
-        if (startTerm.equals(Term.HT)) {
-            startYearPatches.removeIf(patchOrder -> patchOrder.getTerm().equals(Term.VT));
+        List<PatchOrder> startYearPatches = getPatchOrdersFromAgeAndYearAndTerm(startAge, year, startTerm);
+        if (startTerm.equals(Term.VT)) {
+            startYearPatches.addAll(getPatchOrdersFromAgeAndYearAndTerm(startAge, year, Term.HT));
         }
         startAge++;
         year++;
         while (startAge < currentAge) {
-            List<PatchOrder> yearPatches = getPatchOrdersFromAgeAndYear(startAge, year);
-            if (yearPatches != null) {
-                patchOrders.addAll(yearPatches);
-            }
+            List<PatchOrder> yearPatches1 = getPatchOrdersFromAgeAndYearAndTerm(startAge, year, Term.VT);
+            List<PatchOrder> yearPatches2 = getPatchOrdersFromAgeAndYearAndTerm(startAge, year, Term.HT);
+            patchOrders.addAll(yearPatches1);
+            patchOrders.addAll(yearPatches2);
             year++;
             startAge++;
         }
@@ -81,9 +81,14 @@ public class PatchServiceImpl implements PatchService {
         return patchOrders;
     }
 
-    private List<PatchOrder> getPatchOrdersFromAgeAndYear(int age, int year) {
-        ScoutGroup group = scoutGroupRepo.findByAgeInRange(age);
-        return patchOrderRepo.findByYearAndScoutGroup(year, group);
+    private List<PatchOrder> getPatchOrdersFromAgeAndYearAndTerm(int age, int year, Term term) {
+        ScoutGroup group;
+        if (term.equals(Term.VT)) {
+            group = scoutGroupRepo.findByAgeInRange(age - 1);
+        } else {
+            group = scoutGroupRepo.findByAgeInRange(age);
+        }
+        return patchOrderRepo.findByYearAndTermAndScoutGroup(year, term, group);
     }
 
     private List<Patch> filterUniquePatches(List<Patch> patches) {
