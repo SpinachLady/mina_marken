@@ -26,14 +26,7 @@
                         <option>HT</option>
                     </select>
                     <select class="form-select" id="year" name="year">
-                        <option>2018</option>
-                        <option>2019</option>
-                        <option>2020</option>
-                        <option>2021</option>
-                        <option>2022</option>
-                        <option>2023</option>
-                        <option>2024</option>
-                        <option>2025</option>
+                        <option th:each="year : ${years}" th:text="${year}"></option>
                     </select>
                     <label for="patchInput" class="form-label mt-4">Märke</label>
                     <input class="form-control" list="patchOptions" id="patchInput" name="patchName" placeholder="Börja skriva...">

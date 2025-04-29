@@ -16,36 +16,19 @@
         <div class="col-md-8 col-lg-6">
             <div class="bg-white text-dark p-4 rounded shadow text-center">
                 <div>
-                    <label for="exampleSelect1" class="form-label mt-4">När började du i Segeltorps scoutkår?</label>
-                    <select class="form-select" id="exampleSelect1">
+                    <label for="termSelect" class="form-label mt-4">När började du i Segeltorps scoutkår?</label>
+                    <select class="form-select" id="termSelect">
                         <option>VT</option>
                         <option>HT</option>
                     </select>
-                    <select class="form-select" id="exampleSelect3">
-                        <option>2018</option>
-                        <option>2019</option>
-                        <option>2020</option>
-                        <option>2021</option>
-                        <option>2022</option>
-                        <option>2023</option>
-                        <option>2024</option>
-                        <option>2025</option>
+                    <select class="form-select" id="startYearSelect">
+                        <option th:each="startYear : ${startYears}" th:text="${startYear}"></option>
                     </select>
                 </div>
                 <div>
-                    <label for="exampleSelect2" class="form-label mt-4">Vilket år är du född?</label>
-                    <select class="form-select" id="exampleSelect2">
-                        <option>2010</option>
-                        <option>2011</option>
-                        <option>2012</option>
-                        <option>2013</option>
-                        <option>2014</option>
-                        <option>2015</option>
-                        <option>2016</option>
-                        <option>2017</option>
-                        <option>2018</option>
-                        <option>2019</option>
-                        <option>2020</option>
+                    <label for="birthYearSelect" class="form-label mt-4">Vilket år är du född?</label>
+                    <select class="form-select" id="birthYearSelect">
+                        <option th:each="birthYear : ${birthYears}" th:text="${birthYear}"></option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary choice-button" onclick="goToMainPage()">Submit</button>
@@ -55,7 +38,7 @@
 </div>
 <script>
     function goToMainPage() {
-        const scoutID = document.getElementById('exampleSelect3').value + document.getElementById('exampleSelect1').value + document.getElementById('exampleSelect2').value;
+        const scoutID = document.getElementById('startYearSelect').value + document.getElementById('termSelect').value + document.getElementById('birthYearSelect').value;
         window.location.href = '/scout/main/' + scoutID
     }
 </script>
