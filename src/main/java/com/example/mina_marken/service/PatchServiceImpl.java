@@ -69,7 +69,7 @@ public class PatchServiceImpl implements PatchService {
         }
         startAge++;
         year++;
-        while (startAge < currentAge) {
+        while (startAge <= currentAge) {
             List<PatchOrder> yearPatches1 = getPatchOrdersFromAgeAndYearAndTerm(startAge, year, Term.VT);
             List<PatchOrder> yearPatches2 = getPatchOrdersFromAgeAndYearAndTerm(startAge, year, Term.HT);
             patchOrders.addAll(yearPatches1);
