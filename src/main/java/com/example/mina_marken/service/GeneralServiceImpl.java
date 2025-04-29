@@ -42,8 +42,8 @@ public class GeneralServiceImpl implements GeneralService {
             maxBirthYear = year - scoutGroup.getMaxAge();
         }
         else {
-            minBirthYear = (year - scoutGroup.getMinAge()) + 1;
-            maxBirthYear = (year - scoutGroup.getMaxAge()) + 1;
+            minBirthYear = (year - scoutGroup.getMinAge())  - 1;
+            maxBirthYear = (year - scoutGroup.getMaxAge()) - 1;
         }
 
         return getYearsBetween(minBirthYear, maxBirthYear);
