@@ -68,20 +68,25 @@ public class PatchOrderServiceImpl implements PatchOrderService{
 
     public String getInfoTextFromPatchOrders(List<PatchOrder> patchOrders) {
         StringBuilder infoText = new StringBuilder("Dina scouter har tagit detta märke");
+
         if (patchOrders.size() == 1) {
-            infoText.append(" ").append(patchOrders.get(0).getTerm()).append("-").append(patchOrders.get(0).getYear());
-        }
-        else {
-            infoText.append(" ");
-            while (patchOrders.size() > 1) {
-                infoText.append(patchOrders.get(0).getTerm()).append("-").append(patchOrders.get(0).getYear()).append(", ");
-                patchOrders.remove(0);
+            PatchOrder po = patchOrders.get(0);
+            infoText.append(" ").append(po.getTerm()).append("-").append(po.getYear());
+        } else {
+            for (int i = 0; i < patchOrders.size(); i++) {
+                PatchOrder po = patchOrders.get(i);
+                if (i == patchOrders.size() - 1) {
+                    infoText.append("och ").append(po.getTerm()).append("-").append(po.getYear());
+                } else {
+                    infoText.append(" ").append(po.getTerm()).append("-").append(po.getYear()).append(", ");
+                }
             }
-            infoText.append("och ").append(patchOrders.get(0).getYear());
         }
+
         infoText.append(".");
-        return String.valueOf(infoText);
+        return infoText.toString();
     }
+
 
     public void savePatchOrder(PatchOrder patchOrder) {
         patchOrderRepo.save(patchOrder);
@@ -92,7 +97,12 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     }
 
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
-        int age = patchOrder.getYear() - birthYear;
+        int age;
+        if (patchOrder.getTerm().equals(Term.VT)) {
+            age = (patchOrder.getYear() - birthYear) - 1;
+        } else {
+            age = patchOrder.getYear() - birthYear;
+        }
         ScoutGroup sg = scoutGroupRepo.findByAgeInRange(age);
         return patchOrder.getScoutGroup().equals(sg);
     }
@@ -102,12 +112,6 @@ public class PatchOrderServiceImpl implements PatchOrderService{
             return false;
         }
         return patchOrder.getYear() != startYear || patchOrder.getTerm() != Term.VT || startTerm != Term.HT;
-    }
-
-    private List<Integer> getBirthYearsFromScoutGroupAndYear(ScoutGroup scoutGroup, int year) {
-        int minBirthYear = year - scoutGroup.getMinAge();
-        int maxBirthYear = year - scoutGroup.getMaxAge();
-        return generalService.getYearsBetween(minBirthYear, maxBirthYear);
     }
 
     private List<PatchOrder> filterUniquePatchOrders(List<PatchOrder> patchOrders) {
