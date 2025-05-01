@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping
 public class AdminController {
@@ -35,18 +37,23 @@ public class AdminController {
 
     @PostMapping("/addPatchOrder")
     public String addPatchOrder(Model model, @RequestParam String scoutGroup, @RequestParam String termValue, @RequestParam int year, @RequestParam String patchName) {
-        Patch patch = patchService.getPatchFromName(patchName);
-        Term term = Term.valueOf(termValue);
-        ScoutGroup group = scoutGroupService.getScoutGroupFromName(scoutGroup);
-        System.out.println("group (input) " + scoutGroup);
-        System.out.println("group 123" + group);
-        PatchOrder patchOrder = new PatchOrder();
-        patchOrder.setPatch(patch);
-        patchOrder.setScoutGroup(group);
-        patchOrder.setYear(year);
-        patchOrder.setTerm(term);
-        System.out.println("patch order: " + patchOrder);
-        patchOrderService.savePatchOrder(patchOrder);
+        try {
+            Patch patch = Objects.requireNonNull(patchService.getPatchFromName(patchName));
+            Term term = Objects.requireNonNull(Term.valueOf(termValue));
+            ScoutGroup group = Objects.requireNonNull(scoutGroupService.getScoutGroupFromName(scoutGroup));
+            PatchOrder patchOrder = new PatchOrder();
+            patchOrder.setPatch(patch);
+            patchOrder.setScoutGroup(group);
+            patchOrder.setYear(year);
+            patchOrder.setTerm(term);
+            patchOrderService.savePatchOrder(patchOrder);
+        } catch (Exception e) {
+            model.addAttribute("resultColor", "red");
+            model.addAttribute("resultMessage", "Ajdå! Något gick fel. Prova igen.");
+            return adminViewController.getAddPatchPage(model);
+        }
+        model.addAttribute("resultColor", "green");
+        model.addAttribute("resultMessage", "Bra jobbat! Märket är tillagt.");
         return adminViewController.getAddPatchPage(model);
     }
 
