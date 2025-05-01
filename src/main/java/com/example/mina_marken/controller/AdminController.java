@@ -11,9 +11,7 @@ import com.example.mina_marken.service.PatchService;
 import com.example.mina_marken.service.ScoutGroupService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Objects;
 
@@ -55,6 +53,13 @@ public class AdminController {
         model.addAttribute("resultColor", "green");
         model.addAttribute("resultMessage", "Bra jobbat! Märket är tillagt.");
         return adminViewController.getAddPatchPage(model);
+    }
+
+    @RequestMapping("/deletePatchOrder/{id}")
+    public String deletePatchOrder(Model model, @PathVariable Long id) {
+        PatchOrder patchOrder = patchOrderService.getPatchOrderFromID(id);
+        patchOrderService.deletePatchOrder(patchOrder);
+        return adminViewController.getShowListPage(model);
     }
 
 

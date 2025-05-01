@@ -96,6 +96,13 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         return patchOrderRepo.findAll();
     }
 
+    public PatchOrder getPatchOrderFromID(Long ID) {
+        return patchOrderRepo.findById(ID).orElse(null);
+    }
+    public void deletePatchOrder(PatchOrder patchOrder) {
+        patchOrderRepo.delete(patchOrder);
+    }
+
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age;
         if (patchOrder.getTerm().equals(Term.VT)) {

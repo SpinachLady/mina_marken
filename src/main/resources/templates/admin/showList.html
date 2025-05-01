@@ -21,6 +21,7 @@
                             <th scope="col">Märke</th>
                             <th scope="col">Avdelning</th>
                             <th scope="col">Termin</th>
+                            <th scope="col">Radera</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -28,6 +29,11 @@
                             <th scope="row" th:text="${patchOrder.patch.name}"></th>
                             <td th:text="${patchOrder.scoutGroup.name}"></td>
                             <td th:text="${patchOrder.term} + '-' + ${patchOrder.year}"></td>
+                            <td>
+                                <a th:href="@{'/deletePatchOrder/' + ${patchOrder.id}}">
+                                    <button type="button" class="btn btn-outline-danger">X</button>
+                                </a>
+                            </td>
                         </tr>
                         </tbody>
                     </table>
