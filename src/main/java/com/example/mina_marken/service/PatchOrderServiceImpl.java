@@ -124,8 +124,7 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         } catch (Exception e) {
             year = null;
         }
-        List<PatchOrder> patchOrders = patchOrderRepo.findAllByAdvancedSearch(patch, group, term, year);
-        return patchOrders;
+        return patchOrderRepo.findAllActiveByAdvancedSearch(patch, group, term, year);
     }
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age;

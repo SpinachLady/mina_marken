@@ -33,6 +33,6 @@ public interface PatchOrderRepo extends JpaRepository<PatchOrder, Long> {
     AND (:patch IS NULL OR p.patch = :patch)
     AND (p.isArchived = false)
 """)
-    List<PatchOrder> findAllByAdvancedSearch(@Param("patch") Patch patch, @Param("scoutGroup") ScoutGroup scoutGroup, @Param("term") Term term, @Param("year") Integer year);
+    List<PatchOrder> findAllActiveByAdvancedSearch(@Param("patch") Patch patch, @Param("scoutGroup") ScoutGroup scoutGroup, @Param("term") Term term, @Param("year") Integer year);
 
 }
