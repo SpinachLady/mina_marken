@@ -1,6 +1,5 @@
 package com.example.mina_marken.repo;
 
-import com.example.mina_marken.model.entity.Patch;
 import com.example.mina_marken.model.entity.ScoutGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

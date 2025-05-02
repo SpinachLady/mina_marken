@@ -11,13 +11,4 @@ public class MinaMarkenController {
     public String getStartPage() {
         return "index";
     }
-
-    @GetMapping("/patch")
-    public void getAllPatches() {}
-
-    @GetMapping("/patch/organization")
-    public void getOrganizationPatches() {}
-
-    @GetMapping("/patch/{patchID}")
-    public void getPatchById() {}
 }
