@@ -16,6 +16,7 @@ public interface PatchOrderService {
     List<PatchOrder> getAllPatchOrders();
     List<PatchOrder> getAllArchivedPatchOrders();
     PatchOrder getPatchOrderFromID(Long ID);
+    List<PatchOrder> getPatchOrdersFromAdvancedSearch(String patchName, String scoutGroupName, String termValue, String yearValue);
 
 
 }

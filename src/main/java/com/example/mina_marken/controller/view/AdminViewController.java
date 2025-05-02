@@ -9,7 +9,10 @@ import com.example.mina_marken.service.PatchService;
 import com.example.mina_marken.service.ScoutGroupService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import java.util.List;
 
 @Controller
@@ -36,8 +39,12 @@ public class AdminViewController {
     @RequestMapping("/showList")
     public String getShowListPage(Model model) {
         List<PatchOrder> organizationPatches = pos.getAllPatchOrders();
-        model.addAttribute("patchOrders", organizationPatches);
-        return "admin/showList";
+        return getString(model, organizationPatches);
+    }
+    @GetMapping("/showAdvancedSearchList")
+    public String getShowAdvancedSearchListPage(Model model, @RequestParam(required = false) String patchName, @RequestParam(required = false) String scoutGroup, @RequestParam(required = false) String termValue, @RequestParam(required = false) String yearValue) {
+        List<PatchOrder> organizationPatches = pos.getPatchOrdersFromAdvancedSearch(patchName, scoutGroup, termValue, yearValue);
+        return getString(model, organizationPatches);
     }
 
     @RequestMapping("/showArchivedList")
@@ -46,7 +53,6 @@ public class AdminViewController {
         model.addAttribute("patchOrders", organizationPatches);
         return "admin/showArchivedList";
     }
-
 
     @RequestMapping("/addPatch")
     public String getAddPatchPage(Model model) {
@@ -57,6 +63,17 @@ public class AdminViewController {
         model.addAttribute("groups", groups);
         model.addAttribute("patches", patches);
         return "admin/addPatch";
+    }
+
+    private String getString(Model model, List<PatchOrder> organizationPatches) {
+        List<Patch> allPatches = ps.getAllPatches();
+        List<Integer> years = generalService.getActiveStartYears();
+        List<ScoutGroup> groups = sgs.getAllScoutGroups();
+        model.addAttribute("patchOrders", organizationPatches);
+        model.addAttribute("allPatches", allPatches);
+        model.addAttribute("groups", groups);
+        model.addAttribute("years", years);
+        return "admin/showList";
     }
 
 }

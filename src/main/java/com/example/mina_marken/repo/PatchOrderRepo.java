@@ -25,4 +25,14 @@ public interface PatchOrderRepo extends JpaRepository<PatchOrder, Long> {
     @Query("SELECT po FROM PatchOrder po WHERE po.patch = :patch AND po.isArchived = false")
     List<PatchOrder> findActiveByPatch(@Param("patch") Patch patch);
 
+    @Query("""
+    SELECT p FROM PatchOrder p
+    WHERE (:scoutGroup IS NULL OR p.scoutGroup = :scoutGroup)
+    AND (:term IS NULL OR p.term = :term)
+    AND (:year IS NULL OR p.year = :year)
+    AND (:patch IS NULL OR p.patch = :patch)
+    AND (p.isArchived = false)
+""")
+    List<PatchOrder> findAllByAdvancedSearch(@Param("patch") Patch patch, @Param("scoutGroup") ScoutGroup scoutGroup, @Param("term") Term term, @Param("year") Integer year);
+
 }

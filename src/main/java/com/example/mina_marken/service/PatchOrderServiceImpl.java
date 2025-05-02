@@ -6,7 +6,6 @@ import com.example.mina_marken.model.entity.PatchOrder;
 import com.example.mina_marken.model.entity.ScoutGroup;
 import com.example.mina_marken.repo.PatchOrderRepo;
 import com.example.mina_marken.repo.ScoutGroupRepo;
-import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -22,11 +21,15 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     private final PatchOrderRepo patchOrderRepo;
     private final ScoutGroupRepo scoutGroupRepo;
     private final GeneralService generalService;
+    private final PatchService patchService;
+    private final ScoutGroupService scoutGroupService;
 
-    public PatchOrderServiceImpl(PatchOrderRepo patchOrderRepo, ScoutGroupRepo scoutGroupRepo, GeneralService generalService) {
+    public PatchOrderServiceImpl(PatchOrderRepo patchOrderRepo, ScoutGroupRepo scoutGroupRepo, GeneralService generalService, PatchService patchService, ScoutGroupService scoutGroupService) {
         this.patchOrderRepo = patchOrderRepo;
         this.scoutGroupRepo = scoutGroupRepo;
         this.generalService = generalService;
+        this.patchService = patchService;
+        this.scoutGroupService = scoutGroupService;
     }
 
     public PatchOrder getPatchOrderFromScoutIDAndPatch(String scoutID, Patch patch) {
@@ -106,6 +109,24 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         patchOrderRepo.delete(patchOrder);
     }
 
+    public List<PatchOrder> getPatchOrdersFromAdvancedSearch(String patchName, String scoutGroupName, String termValue, String yearValue) {
+        Patch patch = patchService.getPatchFromName(patchName);
+        ScoutGroup group = scoutGroupService.getScoutGroupFromName(scoutGroupName);
+        Term term;
+        Integer year;
+        try {
+            term = Term.valueOf(termValue);
+        } catch (Exception e) {
+            term = null;
+        }
+        try {
+            year = Integer.valueOf(yearValue);
+        } catch (Exception e) {
+            year = null;
+        }
+        List<PatchOrder> patchOrders = patchOrderRepo.findAllByAdvancedSearch(patch, group, term, year);
+        return patchOrders;
+    }
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age;
         if (patchOrder.getTerm().equals(Term.VT)) {

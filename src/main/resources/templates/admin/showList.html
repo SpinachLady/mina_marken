@@ -15,6 +15,48 @@
         <div class="row justify-content-center">
             <div class="col-md-8">
                 <div class="bg-white text-dark p-4 rounded shadow text-center">
+                    <div class="text-start">
+                        <button type="button" class="btn btn-outline-dark toggle-advanced-search" id="toggleAdvancedSearchButton" onclick="toggleAdvancedSearchForm()">Öppna avancerad sökning</button>
+                    </div>
+                    <div id="advancedSearchForm" style="display: none">
+                        <form th:action="@{/admin/showAdvancedSearchList}" method="get" class="advanced-search-form">
+                            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label for="patchInput" class="form-label mt-4">Märke</label>
+                                    <input class="form-control" list="patchOptions" id="patchInput" name="patchName" placeholder="Börja skriva...">
+                                    <datalist id="patchOptions">
+                                        <option th:each="patch : ${allPatches}" th:value="${patch.name}"></option>
+                                    </datalist>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label for="scoutGroup" class="form-label mt-4">Avdelning</label>
+                                    <select class="form-select" id="scoutGroup" name="scoutGroup">
+                                        <option>Alla avdelningar</option>
+                                        <option th:each="group : ${groups}" th:text="${group.name}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <label for="term" class="form-label mt-4">Termin</label>
+                                    <select class="form-select" id="term" name="termValue">
+                                        <option>VT & HT</option>
+                                        <option>VT</option>
+                                        <option>HT</option>
+                                    </select>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <label for="year" class="form-label mt-4"> År</label>
+                                    <select class="form-select" id="year" name="yearValue">
+                                        <option>Alla år</option>
+                                        <option th:each="year : ${years}" th:text="${year}"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-dark choice-button">Sök</button>
+                        </form>
+                    </div>
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -37,9 +79,24 @@
                         </tr>
                         </tbody>
                     </table>
+                    <a href="/admin/showArchivedList">Arkiv</a>
                 </div>
             </div>
         </div>
     </div>
+<script>
+    function toggleAdvancedSearchForm() {
+        let x = document.getElementById("advancedSearchForm");
+        let y = document.getElementById("toggleAdvancedSearchButton")
+        if (x.style.display === "none") {
+            x.style.display = "block";
+            y.textContent = "Stäng avancerad sökning"
+        } else {
+            x.style.display = "none";
+            y.textContent = "Öppna avancerad sökning"
+        }
+
+    }
+</script>
 </body>
 </html>
