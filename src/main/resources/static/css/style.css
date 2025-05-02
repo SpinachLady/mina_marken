@@ -2,7 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-
 }
 body {
     background-color: #043a63;
@@ -102,7 +101,4 @@ h3 {
 .advanced-search-form .btn {
     color: white;
     margin-left: 10px;
-}
-.toggle-advanced-search {
-
 }
