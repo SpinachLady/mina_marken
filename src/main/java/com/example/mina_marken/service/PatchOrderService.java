@@ -14,6 +14,7 @@ public interface PatchOrderService {
     void savePatchOrder(PatchOrder patchOrder);
     void deletePatchOrder(PatchOrder patchOrder);
     List<PatchOrder> getAllPatchOrders();
+    List<PatchOrder> getAllArchivedPatchOrders();
     PatchOrder getPatchOrderFromID(Long ID);
 
 

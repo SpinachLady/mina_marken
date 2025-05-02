@@ -68,7 +68,7 @@ public class AdminController {
         PatchOrder patchOrder = patchOrderService.getPatchOrderFromID(id);
         patchOrder.setArchived(false);
         patchOrderService.savePatchOrder(patchOrder);
-        return adminViewController.getShowListPage(model);
+        return adminViewController.getShowArchivedListPage(model);
     }
 
 

@@ -95,6 +95,9 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     public List<PatchOrder> getAllPatchOrders() {
         return patchOrderRepo.findAllActive();
     }
+    public List<PatchOrder> getAllArchivedPatchOrders() {
+        return patchOrderRepo.findAllArchived();
+    }
 
     public PatchOrder getPatchOrderFromID(Long ID) {
         return patchOrderRepo.findById(ID).orElse(null);

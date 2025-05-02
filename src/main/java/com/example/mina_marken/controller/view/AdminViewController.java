@@ -40,6 +40,14 @@ public class AdminViewController {
         return "admin/showList";
     }
 
+    @RequestMapping("/showArchivedList")
+    public String getShowArchivedListPage(Model model) {
+        List<PatchOrder> organizationPatches = pos.getAllArchivedPatchOrders();
+        model.addAttribute("patchOrders", organizationPatches);
+        return "admin/showArchivedList";
+    }
+
+
     @RequestMapping("/addPatch")
     public String getAddPatchPage(Model model) {
         List<ScoutGroup> groups = sgs.getAllScoutGroups();
