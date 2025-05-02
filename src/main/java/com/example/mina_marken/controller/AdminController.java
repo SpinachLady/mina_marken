@@ -55,10 +55,19 @@ public class AdminController {
         return adminViewController.getAddPatchPage(model);
     }
 
-    @RequestMapping("/deletePatchOrder/{id}")
-    public String deletePatchOrder(Model model, @PathVariable Long id) {
+    @RequestMapping("/archivePatchOrder/{id}")
+    public String archivePatchOrder(Model model, @PathVariable Long id) {
         PatchOrder patchOrder = patchOrderService.getPatchOrderFromID(id);
-        patchOrderService.deletePatchOrder(patchOrder);
+        patchOrder.setArchived(true);
+        patchOrderService.savePatchOrder(patchOrder);
+        return adminViewController.getShowListPage(model);
+    }
+
+    @RequestMapping("/unarchivePatchOrder/{id}")
+    public String unarchivePatchOrder(Model model, @PathVariable Long id) {
+        PatchOrder patchOrder = patchOrderService.getPatchOrderFromID(id);
+        patchOrder.setArchived(false);
+        patchOrderService.savePatchOrder(patchOrder);
         return adminViewController.getShowListPage(model);
     }
 

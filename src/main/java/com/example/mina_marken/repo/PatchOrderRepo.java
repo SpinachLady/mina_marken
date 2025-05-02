@@ -5,13 +5,21 @@ import com.example.mina_marken.model.entity.Patch;
 import com.example.mina_marken.model.entity.PatchOrder;
 import com.example.mina_marken.model.entity.ScoutGroup;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 
 public interface PatchOrderRepo extends JpaRepository<PatchOrder, Long> {
 
-    List<PatchOrder> findByYearAndTermAndScoutGroup(int year, Term term, ScoutGroup scoutGroup);
+    @Query("SELECT po FROM PatchOrder po WHERE po.isArchived = false")
+    List<PatchOrder> findAllActive();
 
-    List<PatchOrder> findByPatch(Patch patch);
+    @Query("SELECT po FROM PatchOrder po WHERE po.year = :year AND po.term = :term AND po.scoutGroup = :scoutGroup AND po.isArchived = false")
+    List<PatchOrder> findActiveByYearAndTermAndScoutGroup(@Param("year") int year, @Param("term") Term term, @Param("scoutGroup") ScoutGroup scoutGroup);
+
+    @Query("SELECT po FROM PatchOrder po WHERE po.patch = :patch AND po.isArchived = false")
+    List<PatchOrder> findActiveByPatch(@Param("patch") Patch patch);
+
 }

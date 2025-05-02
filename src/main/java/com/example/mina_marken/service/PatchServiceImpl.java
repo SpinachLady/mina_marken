@@ -88,7 +88,7 @@ public class PatchServiceImpl implements PatchService {
         } else {
             group = scoutGroupRepo.findByAgeInRange(age);
         }
-        return patchOrderRepo.findByYearAndTermAndScoutGroup(year, term, group);
+        return patchOrderRepo.findActiveByYearAndTermAndScoutGroup(year, term, group);
     }
 
     private List<Patch> filterUniquePatches(List<Patch> patches) {

@@ -33,7 +33,7 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         int birthYear = Integer.parseInt(scoutID.substring(6));
         int startYear = Integer.parseInt(scoutID.substring(0, 4));
         Term startTerm = Term.valueOf(scoutID.substring(4, 6));
-        List<PatchOrder> patchOrderList = patchOrderRepo.findByPatch(patch);
+        List<PatchOrder> patchOrderList = patchOrderRepo.findActiveByPatch(patch);
         if (patchOrderList.size() > 1) {
             for (PatchOrder patchOrder : patchOrderList) {
                 if (birthYearMatchesScoutGroupInPatchOrder(birthYear, patchOrder) && startTermIsEarlierThanPatchOrderTime(startYear, startTerm, patchOrder)) {
@@ -54,7 +54,7 @@ public class PatchOrderServiceImpl implements PatchOrderService{
             currentTerm = Term.VT;
         }
         List<Integer> birthYears = generalService.getBirthYearsFromScoutGroupAndYearAndTerm(scoutGroup, Year.now().getValue(), currentTerm);
-        List<PatchOrder> patchOrderList = patchOrderRepo.findByPatch(patch);
+        List<PatchOrder> patchOrderList = patchOrderRepo.findActiveByPatch(patch);
         List<PatchOrder> correctPatchOrders = new ArrayList<>();
         for (Integer birthYear : birthYears) {
             for (PatchOrder patchOrder : patchOrderList) {
@@ -93,7 +93,7 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     }
 
     public List<PatchOrder> getAllPatchOrders() {
-        return patchOrderRepo.findAll();
+        return patchOrderRepo.findAllActive();
     }
 
     public PatchOrder getPatchOrderFromID(Long ID) {

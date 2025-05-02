@@ -31,4 +31,6 @@ public class PatchOrder {
 
     private int year;
 
+    private boolean isArchived;
+
 }
