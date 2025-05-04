@@ -47,6 +47,14 @@ h3 {
     text-decoration: none;
     text-align: center;
 }
+.choice-button:hover {
+    color: black;
+}
+
+.button-link {
+    text-decoration: none;
+}
+
 .group-name-field {
     height: 15vh;
     text-align: center;
@@ -89,11 +97,20 @@ h3 {
 .tentGreen {
     background-color: #00bf63;
 }
+.tentGreen:hover {
+    background-color: #02f07d;
+}
 .grassGreen {
     background-color: #7ed957;
 }
+.grassGreen:hover {
+    background-color: #92fc65;
+}
 .limeGreen {
-    background-color: #c1ff72;
+    background-color: #a6d964;
+}
+.limeGreen:hover {
+    background-color: #c2fc77;
 }
 .advanced-search-form {
     border-style: dashed;
