@@ -7,12 +7,16 @@ body {
     background-color: #043a63;
     min-height: 100vh;
 }
-.header {
-    height: 20vh;
+header {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+.header-link {
+    text-decoration: none;
+    color: white;
+}
+
 .logo {
     display: block;
     margin-left: auto;
