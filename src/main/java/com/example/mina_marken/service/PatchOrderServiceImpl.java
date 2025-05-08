@@ -74,14 +74,14 @@ public class PatchOrderServiceImpl implements PatchOrderService{
 
         if (patchOrders.size() == 1) {
             PatchOrder po = patchOrders.get(0);
-            infoText.append(" ").append(po.getTerm()).append("-").append(po.getYear());
+            infoText.append(" ").append(po.getTerm()).append("-").append(po.getOrderYear());
         } else {
             for (int i = 0; i < patchOrders.size(); i++) {
                 PatchOrder po = patchOrders.get(i);
                 if (i == patchOrders.size() - 1) {
-                    infoText.append("och ").append(po.getTerm()).append("-").append(po.getYear());
+                    infoText.append("och ").append(po.getTerm()).append("-").append(po.getOrderYear());
                 } else {
-                    infoText.append(" ").append(po.getTerm()).append("-").append(po.getYear()).append(", ");
+                    infoText.append(" ").append(po.getTerm()).append("-").append(po.getOrderYear()).append(", ");
                 }
             }
         }
@@ -129,19 +129,19 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age;
         if (patchOrder.getTerm().equals(Term.VT)) {
-            age = (patchOrder.getYear() - birthYear) - 1;
+            age = (patchOrder.getOrderYear() - birthYear) - 1;
         } else {
-            age = patchOrder.getYear() - birthYear;
+            age = patchOrder.getOrderYear() - birthYear;
         }
         ScoutGroup sg = scoutGroupRepo.findByAgeInRange(age);
         return patchOrder.getScoutGroup().equals(sg);
     }
 
     private boolean startTermIsEarlierThanPatchOrderTime(int startYear, Term startTerm, PatchOrder patchOrder) {
-        if (patchOrder.getYear() < startYear) {
+        if (patchOrder.getOrderYear() < startYear) {
             return false;
         }
-        return patchOrder.getYear() != startYear || patchOrder.getTerm() != Term.VT || startTerm != Term.HT;
+        return patchOrder.getOrderYear() != startYear || patchOrder.getTerm() != Term.VT || startTerm != Term.HT;
     }
 
     private List<PatchOrder> filterUniquePatchOrders(List<PatchOrder> patchOrders) {

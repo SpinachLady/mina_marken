@@ -29,7 +29,7 @@ public class PatchOrder {
     @Enumerated(EnumType.STRING)
     private Term term;
 
-    private int year;
+    private int orderYear;
 
     private boolean isArchived;
 

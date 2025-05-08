@@ -42,7 +42,7 @@ public class AdminController {
             PatchOrder patchOrder = new PatchOrder();
             patchOrder.setPatch(patch);
             patchOrder.setScoutGroup(group);
-            patchOrder.setYear(year);
+            patchOrder.setOrderYear(year);
             patchOrder.setTerm(term);
             patchOrderService.savePatchOrder(patchOrder);
         } catch (Exception e) {
