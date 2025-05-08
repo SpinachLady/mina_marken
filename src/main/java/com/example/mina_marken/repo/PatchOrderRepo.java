@@ -29,7 +29,7 @@ public interface PatchOrderRepo extends JpaRepository<PatchOrder, Long> {
     SELECT p FROM PatchOrder p
     WHERE (:scoutGroup IS NULL OR p.scoutGroup = :scoutGroup)
     AND (:term IS NULL OR p.term = :term)
-    AND (:orderYear IS NULL OR p.orderYear = :year)
+    AND (:orderYear IS NULL OR p.orderYear = :orderYear)
     AND (:patch IS NULL OR p.patch = :patch)
     AND (p.isArchived = false)
 """)

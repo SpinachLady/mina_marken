@@ -113,18 +113,18 @@ public class PatchOrderServiceImpl implements PatchOrderService{
         Patch patch = patchService.getPatchFromName(patchName);
         ScoutGroup group = scoutGroupService.getScoutGroupFromName(scoutGroupName);
         Term term;
-        Integer year;
+        Integer orderYear;
         try {
             term = Term.valueOf(termValue);
         } catch (Exception e) {
             term = null;
         }
         try {
-            year = Integer.valueOf(yearValue);
+            orderYear = Integer.valueOf(yearValue);
         } catch (Exception e) {
-            year = null;
+            orderYear = null;
         }
-        return patchOrderRepo.findAllActiveByAdvancedSearch(patch, group, term, year);
+        return patchOrderRepo.findAllActiveByAdvancedSearch(patch, group, term, orderYear);
     }
     private boolean birthYearMatchesScoutGroupInPatchOrder(int birthYear, PatchOrder patchOrder) {
         int age;
