@@ -37,7 +37,7 @@ class PatchOrderServiceImplTest {
         ScoutGroup group = new ScoutGroup(1L, "testGroup_one", 8, 9);
         Patch patch = new Patch(1L, "testPatch_one", "testLink_one", null);
         List<PatchOrder> actualResult = patchOrderService.getPatchOrderFromGroupIDAndPatch(group, patch);
-        assertEquals(actualResult.size(), 1);
+        assertEquals(1, actualResult.size());
         assertEquals(2024, actualResult.get(0).getOrderYear());
         assertEquals(Term.HT, actualResult.get(0).getTerm());
     }
