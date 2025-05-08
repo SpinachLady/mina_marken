@@ -2,26 +2,29 @@ package com.example.mina_marken.service;
 
 import com.example.mina_marken.model.Term;
 import com.example.mina_marken.model.entity.ScoutGroup;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Year;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
+@Transactional
 class GeneralServiceImplTest {
 
+    @Autowired
     private GeneralServiceImpl generalService;
 
-    @BeforeEach
-    void setUp() {
-        generalService = new GeneralServiceImpl();
+    @Test
+    void contextLoads() {
+        assertNotNull(generalService);
     }
-
     @Test
     void testGetActiveBirthYears() {
         int expectedEarliestYear = 2010;

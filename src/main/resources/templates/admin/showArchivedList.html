@@ -33,7 +33,7 @@
                     <tr class="table-light" th:each="patchOrder : ${patchOrders}">
                         <th scope="row" th:text="${patchOrder.patch.name}"></th>
                         <td th:text="${patchOrder.scoutGroup.name}"></td>
-                        <td th:text="${patchOrder.term} + '-' + ${patchOrder.year}"></td>
+                        <td th:text="${patchOrder.term} + '-' + ${patchOrder.orderYear}"></td>
                         <td>
                             <a th:href="@{'/unarchivePatchOrder/' + ${patchOrder.id}}">
                                 <button type="button" class="btn btn-outline-success">X</button>

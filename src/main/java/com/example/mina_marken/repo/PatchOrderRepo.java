@@ -19,7 +19,7 @@ public interface PatchOrderRepo extends JpaRepository<PatchOrder, Long> {
     @Query("SELECT po FROM PatchOrder po WHERE po.isArchived = true")
     List<PatchOrder> findAllArchived();
 
-    @Query("SELECT po FROM PatchOrder po WHERE po.year = :year AND po.term = :term AND po.scoutGroup = :scoutGroup AND po.isArchived = false")
+    @Query("SELECT po FROM PatchOrder po WHERE po.orderYear = :year AND po.term = :term AND po.scoutGroup = :scoutGroup AND po.isArchived = false")
     List<PatchOrder> findActiveByYearAndTermAndScoutGroup(@Param("year") int year, @Param("term") Term term, @Param("scoutGroup") ScoutGroup scoutGroup);
 
     @Query("SELECT po FROM PatchOrder po WHERE po.patch = :patch AND po.isArchived = false")
@@ -29,10 +29,10 @@ public interface PatchOrderRepo extends JpaRepository<PatchOrder, Long> {
     SELECT p FROM PatchOrder p
     WHERE (:scoutGroup IS NULL OR p.scoutGroup = :scoutGroup)
     AND (:term IS NULL OR p.term = :term)
-    AND (:year IS NULL OR p.year = :year)
+    AND (:orderYear IS NULL OR p.orderYear = :orderYear)
     AND (:patch IS NULL OR p.patch = :patch)
     AND (p.isArchived = false)
 """)
-    List<PatchOrder> findAllActiveByAdvancedSearch(@Param("patch") Patch patch, @Param("scoutGroup") ScoutGroup scoutGroup, @Param("term") Term term, @Param("year") Integer year);
+    List<PatchOrder> findAllActiveByAdvancedSearch(@Param("patch") Patch patch, @Param("scoutGroup") ScoutGroup scoutGroup, @Param("term") Term term, @Param("orderYear") Integer orderYear);
 
 }
