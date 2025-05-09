@@ -4,6 +4,7 @@ import com.example.mina_marken.model.Term;
 import com.example.mina_marken.model.entity.ScoutGroup;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
@@ -47,5 +48,15 @@ public class GeneralServiceImpl implements GeneralService {
         }
 
         return getYearsBetween(minBirthYear, maxBirthYear);
+    }
+
+    public Term getCurrentTerm() {
+        LocalDate midYear = LocalDate.of(Year.now().getValue(), 6, 30);
+        if (LocalDate.now().isAfter(midYear)) {
+            return Term.HT;
+        }
+        else {
+            return Term.VT;
+        }
     }
 }

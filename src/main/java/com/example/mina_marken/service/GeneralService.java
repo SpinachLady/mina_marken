@@ -10,4 +10,6 @@ public interface GeneralService {
     List<Integer> getActiveStartYears();
     List<Integer> getYearsBetween(int latestYear, int earliestYear);
     List<Integer> getBirthYearsFromScoutGroupAndYearAndTerm(ScoutGroup scoutGroup, int year, Term term);
+
+    Term getCurrentTerm();
 }

@@ -48,14 +48,7 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     }
 
     public List<PatchOrder> getPatchOrderFromGroupIDAndPatch(ScoutGroup scoutGroup, Patch patch) {
-        Term currentTerm;
-        LocalDate midYear = LocalDate.of(Year.now().getValue(), 6, 30);
-        if (LocalDate.now().isAfter(midYear)) {
-            currentTerm = Term.HT;
-        }
-        else {
-            currentTerm = Term.VT;
-        }
+        Term currentTerm = generalService.getCurrentTerm();
         List<Integer> birthYears = generalService.getBirthYearsFromScoutGroupAndYearAndTerm(scoutGroup, Year.now().getValue(), currentTerm);
         List<PatchOrder> patchOrderList = patchOrderRepo.findActiveByPatch(patch);
         List<PatchOrder> correctPatchOrders = new ArrayList<>();
