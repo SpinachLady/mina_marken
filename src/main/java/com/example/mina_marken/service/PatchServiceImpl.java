@@ -21,11 +21,13 @@ public class PatchServiceImpl implements PatchService {
     private final PatchOrderRepo patchOrderRepo;
     private final PatchRepo patchRepo;
     private final ScoutGroupRepo scoutGroupRepo;
+    private final GeneralService generalService;
 
-    public PatchServiceImpl(PatchOrderRepo patchOrderRepo, PatchRepo patchRepo, ScoutGroupRepo scoutGroupRepo) {
+    public PatchServiceImpl(PatchOrderRepo patchOrderRepo, PatchRepo patchRepo, ScoutGroupRepo scoutGroupRepo, GeneralService generalService) {
         this.patchOrderRepo = patchOrderRepo;
         this.patchRepo = patchRepo;
         this.scoutGroupRepo = scoutGroupRepo;
+        this.generalService = generalService;
     }
 
     public List<Patch> getPatchesFromIdCode(String idCode) {
@@ -39,6 +41,10 @@ public class PatchServiceImpl implements PatchService {
     public List<Patch> getPatchesFromCurrentScoutGroup(ScoutGroup scoutGroup) {
         int minBirthYear = getBirthYearFromAge(scoutGroup.getMinAge());
         int maxBirthYear = getBirthYearFromAge(scoutGroup.getMaxAge());
+        if (generalService.getCurrentTerm().equals(Term.VT)) {
+            minBirthYear--;
+            maxBirthYear--;
+        }
         List<Integer> birthYears = getBirthYearsBetween(minBirthYear, maxBirthYear);
         List<PatchOrder> patchOrders = new ArrayList<>();
         for (Integer birthYear : birthYears) {
