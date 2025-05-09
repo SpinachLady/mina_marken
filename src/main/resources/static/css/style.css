@@ -52,6 +52,11 @@ h2 {
 .button-link {
     text-decoration: none;
 }
+.back-link {
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-block;
+}
 
 .group-name-field {
     height: 15vh;

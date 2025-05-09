@@ -20,6 +20,9 @@
         <div class="row justify-content-center">
             <div class="col-md-8 col-lg-6">
                 <div class="bg-white text-dark p-4 rounded shadow text-center">
+                    <div class="text-start">
+                        <a th:href="@{'/scout/main/' + ${scoutID}}" class="back-link">Tillbaka</a>
+                    </div>
                     <h3 th:text="${patch.name}"></h3>
                     <img th:src="${patch.imgUrl}"
                          th:alt="${patch.name}" class="img-fluid my-3" style="max-height: 200px;">

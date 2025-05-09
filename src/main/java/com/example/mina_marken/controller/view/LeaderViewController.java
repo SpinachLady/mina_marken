@@ -41,10 +41,10 @@ public class LeaderViewController {
         return "leader/main";
     }
 
-    @RequestMapping("/specific/{groupID}/{patchID}")
-    public String getSpecificPage(Model model, @PathVariable Long groupID, @PathVariable Long patchID) {
+    @RequestMapping("/specific/{groupName}/{patchID}")
+    public String getSpecificPage(Model model, @PathVariable String groupName, @PathVariable Long patchID) {
         Patch patch = ps.getPatchFromPatchId(patchID);
-        ScoutGroup group = sgs.getScoutGroupFromID(groupID);
+        ScoutGroup group = sgs.getScoutGroupFromName(groupName);
         List<PatchOrder> patchOrders = pos.getPatchOrderFromGroupIDAndPatch(group, patch);
         String infoText = pos.getInfoTextFromPatchOrders(patchOrders);
         model.addAttribute("infoText", infoText);

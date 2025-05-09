@@ -18,6 +18,9 @@
 </header>
     <div class="container py-3">
         <div class="row justify-content-center patchListContainer">
+            <a th:href="@{/scout/createAccount}" class="button-link">
+                <button type="button" class="btn tentGreen choice-button">Tillbaka</button>
+            </a>
             <div class="col-12">
                 <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3 justify-content-left">
                     <div class="col" th:each="patch : ${patches}">
