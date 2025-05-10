@@ -8,7 +8,6 @@ import com.example.mina_marken.repo.PatchOrderRepo;
 import com.example.mina_marken.repo.ScoutGroupRepo;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
