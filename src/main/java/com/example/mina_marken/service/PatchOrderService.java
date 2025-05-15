@@ -12,7 +12,6 @@ public interface PatchOrderService {
     List<PatchOrder> getPatchOrderFromGroupIDAndPatch(ScoutGroup scoutGroup, Patch patch);
     String getInfoTextFromPatchOrders(List<PatchOrder> patchOrders);
     void savePatchOrder(PatchOrder patchOrder);
-    void deletePatchOrder(PatchOrder patchOrder);
     List<PatchOrder> getAllPatchOrders();
     List<PatchOrder> getAllArchivedPatchOrders();
     PatchOrder getPatchOrderFromID(Long ID);

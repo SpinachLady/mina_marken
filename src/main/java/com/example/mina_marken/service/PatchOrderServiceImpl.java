@@ -97,9 +97,6 @@ public class PatchOrderServiceImpl implements PatchOrderService{
     public PatchOrder getPatchOrderFromID(Long ID) {
         return patchOrderRepo.findById(ID).orElse(null);
     }
-    public void deletePatchOrder(PatchOrder patchOrder) {
-        patchOrderRepo.delete(patchOrder);
-    }
 
     public List<PatchOrder> getPatchOrdersFromAdvancedSearch(String patchName, String scoutGroupName, String termValue, String yearValue) {
         Patch patch = patchService.getPatchFromName(patchName);
