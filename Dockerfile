@@ -4,6 +4,8 @@ WORKDIR /app
 
 COPY . .
 
+RUN chmod +x /app/gradlew
+
 RUN /app/gradlew clean build
 
 FROM amazoncorretto:17-alpine
